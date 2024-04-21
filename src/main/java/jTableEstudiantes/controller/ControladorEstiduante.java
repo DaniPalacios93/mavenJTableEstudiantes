@@ -7,7 +7,6 @@ import javax.persistence.Persistence;
 
 import jTableEstudiantes.entities.Estudiante;
 
-
 public class ControladorEstiduante {
 
 	private static ControladorEstiduante instance = null;
@@ -20,7 +19,6 @@ public class ControladorEstiduante {
 		super();
 	}
 	
-	
 	/**
 	 * 
 	 * @return
@@ -31,7 +29,6 @@ public class ControladorEstiduante {
 		}
 		return instance;
 	}
-	
 	
 	/**
 	 * 
@@ -44,7 +41,6 @@ public class ControladorEstiduante {
 		return em;
 	}
 	
-	
 	/**
 	 * 
 	 * @return
@@ -53,6 +49,29 @@ public class ControladorEstiduante {
 		return getEntityManager().createNativeQuery("SELECT * FROM estudiante", Estudiante.class).getResultList();
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Estudiante findById(int id) {
+		
+		Estudiante estudiante = (Estudiante) getEntityManager().createNativeQuery("SELECT * FROM estudiante WHERE id=" + id, Estudiante.class).getSingleResult();
+		return estudiante;
+	}
+	
+	
+	/**
+	 * 
+	 * @param e
+	 */
+	public void updateEstudiante (Estudiante e) {
+		EntityManager em = getEntityManager();
+		
+		em.getTransaction().begin();
+		em.merge(e);
+		em.getTransaction().commit();
+	}
 	
 	
 	
